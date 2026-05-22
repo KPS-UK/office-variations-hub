@@ -57,7 +57,7 @@ export const variations: Variation[] = [
     ],
     repoUrl: REPO,
     branchUrl: `${REPO}/tree/feature/customer-reviews`,
-    vercelUrl: null,
+    vercelUrl: "https://office-mock-h8qkwjn12-kps-partner-sandbox.vercel.app",
   },
   {
     slug: "office-club-loyalty",
@@ -98,6 +98,6 @@ export const variations: Variation[] = [
     ],
     repoUrl: REPO,
     branchUrl: `${REPO}/tree/feature/office-club-loyalty`,
-    vercelUrl: null,
+    vercelUrl: "https://office-mock-5cy08au7m-kps-partner-sandbox.vercel.app",
   },
 ];
