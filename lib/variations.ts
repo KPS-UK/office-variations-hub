@@ -9,7 +9,7 @@ export type Variation = {
   effort: string;
   duration: string;
   featureFlag: string;
-  accent: "rose" | "indigo";
+  accent: "neutral" | "rose" | "indigo";
   highlights: string[];
   outOfScope: string[];
   acceptance: string[];
@@ -19,6 +19,27 @@ export type Variation = {
 };
 
 const REPO = "https://github.com/KPS-UK/office-mock";
+
+export const baseline: Variation = {
+  slug: "baseline",
+  branch: "main",
+  title: "Current site",
+  shortTitle: "Current",
+  tagline: "office.co.uk as it ships today.",
+  summary:
+    "The current production experience — no iteration changes applied. Used as the left-hand reference panel.",
+  flag: "Baseline",
+  effort: "—",
+  duration: "—",
+  featureFlag: "—",
+  accent: "neutral",
+  highlights: [],
+  outOfScope: [],
+  acceptance: [],
+  repoUrl: REPO,
+  branchUrl: `${REPO}/tree/main`,
+  vercelUrl: "https://office-mock.vercel.app",
+};
 
 export const variations: Variation[] = [
   {
@@ -33,7 +54,7 @@ export const variations: Variation[] = [
     effort: "2 / 5",
     duration: "8–10 weeks",
     featureFlag: "reviews.enabled",
-    accent: "rose",
+    accent: "rose" as const,
     highlights: [
       "Vendor selection from Yotpo, Bazaarvoice, Reevoo or Trustpilot",
       "Post-purchase review-request email 14 days after delivery",
@@ -74,7 +95,7 @@ export const variations: Variation[] = [
     effort: "4 / 5",
     duration: "16–20 weeks",
     featureFlag: "loyalty.enabled",
-    accent: "indigo",
+    accent: "indigo" as const,
     highlights: [
       "Three tiers: Member (£0), Insider (£150), VIP (£400)",
       "1 point per £1 spent; 100 points = £5 redemption",
