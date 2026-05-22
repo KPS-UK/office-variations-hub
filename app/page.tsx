@@ -11,8 +11,6 @@ export default function HomePage() {
   // Suppress one round of postMessage echoes after we programmatically set src,
   // so the two iframes don't ping-pong against each other.
   const ignoreUntil = useRef<number>(0);
-  const reviewsRef = useRef<HTMLIFrameElement>(null);
-  const loyaltyRef = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
     function onMessage(e: MessageEvent) {
@@ -37,16 +35,8 @@ export default function HomePage() {
     <main className="flex min-h-screen flex-col">
       <Header page={page} onNavigate={navigate} />
       <div className="grid flex-1 grid-cols-1 gap-3 px-3 pb-3 lg:grid-cols-2">
-        <Panel
-          variation={reviews}
-          page={page}
-          iframeRef={reviewsRef}
-        />
-        <Panel
-          variation={loyalty}
-          page={page}
-          iframeRef={loyaltyRef}
-        />
+        <Panel variation={reviews} page={page} />
+        <Panel variation={loyalty} page={page} />
       </div>
       <Legend />
     </main>
@@ -108,11 +98,9 @@ function Header({
 function Panel({
   variation,
   page,
-  iframeRef,
 }: {
   variation: (typeof variations)[number];
   page: PagePath;
-  iframeRef: React.RefObject<HTMLIFrameElement | null>;
 }) {
   const accent = variation.accent === "rose" ? "rose" : "indigo";
   const accentBg = accent === "rose" ? "bg-rose-500" : "bg-indigo-500";
@@ -159,7 +147,6 @@ function Panel({
       </div>
       <div className="relative flex-1 bg-white">
         <iframe
-          ref={iframeRef}
           src={`${variation.vercelUrl}/${page}`}
           title={variation.title}
           className="absolute inset-0 h-full w-full"
