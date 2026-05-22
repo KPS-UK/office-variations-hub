@@ -2,19 +2,20 @@ export type Variation = {
   slug: string;
   branch: string;
   title: string;
+  shortTitle: string;
   tagline: string;
   summary: string;
   flag: string;
   effort: string;
   duration: string;
   featureFlag: string;
+  accent: "rose" | "indigo";
   highlights: string[];
   outOfScope: string[];
   acceptance: string[];
   repoUrl: string;
   branchUrl: string;
-  /** Vercel deployment URL. Update once the branch is deployed. */
-  vercelUrl: string | null;
+  vercelUrl: string;
 };
 
 const REPO = "https://github.com/KPS-UK/office-mock";
@@ -24,6 +25,7 @@ export const variations: Variation[] = [
     slug: "customer-reviews",
     branch: "feature/customer-reviews",
     title: "Customer Reviews at Scale",
+    shortTitle: "Reviews",
     tagline: "PDP + PLP review system, fit polls, and rich-snippet schema.",
     summary:
       "Move OFFICE from \"0 Reviews\" displayed on PDPs to a credible, filterable, fit-poll-enabled review system that lifts PDP conversion, reduces size-related returns, and earns Google review rich-snippets.",
@@ -31,6 +33,7 @@ export const variations: Variation[] = [
     effort: "2 / 5",
     duration: "8–10 weeks",
     featureFlag: "reviews.enabled",
+    accent: "rose",
     highlights: [
       "Vendor selection from Yotpo, Bazaarvoice, Reevoo or Trustpilot",
       "Post-purchase review-request email 14 days after delivery",
@@ -57,12 +60,13 @@ export const variations: Variation[] = [
     ],
     repoUrl: REPO,
     branchUrl: `${REPO}/tree/feature/customer-reviews`,
-    vercelUrl: "https://office-mock-h8qkwjn12-kps-partner-sandbox.vercel.app",
+    vercelUrl: "https://office-mock-reviews.vercel.app",
   },
   {
     slug: "office-club-loyalty",
     branch: "feature/office-club-loyalty",
     title: "OFFICE Club Tiered Loyalty",
+    shortTitle: "Loyalty",
     tagline: "Three-tier points programme replacing standalone discount codes.",
     summary:
       "Replace current standalone discount codes (Student, Blue Light) with a tiered, points-based loyalty programme that drives repeat purchase, app installs, and email opt-ins.",
@@ -70,6 +74,7 @@ export const variations: Variation[] = [
     effort: "4 / 5",
     duration: "16–20 weeks",
     featureFlag: "loyalty.enabled",
+    accent: "indigo",
     highlights: [
       "Three tiers: Member (£0), Insider (£150), VIP (£400)",
       "1 point per £1 spent; 100 points = £5 redemption",
@@ -98,6 +103,15 @@ export const variations: Variation[] = [
     ],
     repoUrl: REPO,
     branchUrl: `${REPO}/tree/feature/office-club-loyalty`,
-    vercelUrl: "https://office-mock-5cy08au7m-kps-partner-sandbox.vercel.app",
+    vercelUrl: "https://office-mock-loyalty.vercel.app",
   },
 ];
+
+export const PAGES = [
+  { name: "Home", path: "index.html" },
+  { name: "Category", path: "plp.html" },
+  { name: "Product", path: "pdp.html" },
+  { name: "Checkout", path: "checkout.html" },
+] as const;
+
+export type PagePath = (typeof PAGES)[number]["path"];
