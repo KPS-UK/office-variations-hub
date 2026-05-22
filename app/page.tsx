@@ -6,6 +6,19 @@ import { PAGES, variations, type PagePath } from "@/lib/variations";
 
 const [reviews, loyalty] = variations;
 
+const BYPASS_TOKEN = process.env.NEXT_PUBLIC_OFFICE_MOCK_BYPASS;
+
+// Builds an office-mock URL with the Vercel protection-bypass query params so
+// the iframe can render the protected deployment for an authenticated hub user.
+function buildUrl(base: string, page: PagePath): string {
+  if (!BYPASS_TOKEN) return `${base}/${page}`;
+  const params = new URLSearchParams({
+    "x-vercel-protection-bypass": BYPASS_TOKEN,
+    "x-vercel-set-bypass-cookie": "samesitenone",
+  });
+  return `${base}/${page}?${params.toString()}`;
+}
+
 export default function HomePage() {
   const [page, setPage] = useState<PagePath>("index.html");
   // Suppress one round of postMessage echoes after we programmatically set src,
@@ -136,7 +149,7 @@ function Panel({
             Brief
           </Link>
           <a
-            href={`${variation.vercelUrl}/${page}`}
+            href={buildUrl(variation.vercelUrl, page)}
             target="_blank"
             rel="noreferrer"
             className="rounded-md border border-neutral-800 px-2 py-1 text-neutral-400 hover:border-neutral-600 hover:text-neutral-200"
@@ -147,7 +160,7 @@ function Panel({
       </div>
       <div className="relative flex-1 bg-white">
         <iframe
-          src={`${variation.vercelUrl}/${page}`}
+          src={buildUrl(variation.vercelUrl, page)}
           title={variation.title}
           className="absolute inset-0 h-full w-full"
         />
